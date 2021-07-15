@@ -21,7 +21,7 @@ npm run lint
 ```
 
 ### To do
-- [ ] Login players screen
+- [x] Login players screen
 - [ ] Add css to almost everything
 - [ ] Refactor with clean code
 - [ ] Decompose in more components

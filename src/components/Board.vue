@@ -24,12 +24,15 @@ export default {
     components: {
         PlayersScore
     },
+    props: {
+        players: {
+            required: true,
+            type: Array
+        }
+    },
     data() {
         return {
-            players: [
-                { name: "player 1", winsCount: 0, current: true, value: "X" },
-                { name: "player 2", winsCount: 0, current: false, value: "O" }
-            ],
+            playersData: this.players,
             game: {
                 number: 1,
                 board: ["", "", "", "", "", "", "", "", ""],
@@ -90,14 +93,14 @@ export default {
             return
         },
         setNewCurrentPlayer() {
-            if (this.players[0].current) {
-                this.players[0].current = false;
-                this.players[1].current = true;
+            if (this.playersData[0].current) {
+                this.playersData[0].current = false;
+                this.playersData[1].current = true;
                 return;
             }
 
-            this.players[0].current = true;
-            this.players[1].current = false;
+            this.playersData[0].current = true;
+            this.playersData[1].current = false;
         },
         checkHorizontal() {
             return (this.game.board[0] === this.game.board[1]
@@ -133,7 +136,7 @@ export default {
             this.game.finished = true;
             ++this.currentPlayer.winsCount;
             this.game.winner = this.currentPlayer.name;
-            window.alert(`Jogador ${this.game.winner} venceu!\nJogue novamente!`);
+            alert(`Jogador ${this.game.winner} venceu!\nJogue novamente!`);
         }
     }
 }
@@ -141,8 +144,8 @@ export default {
 
 <style>
 .game-board {
-    width: 600px;
-	height: 600px;
+    width: 400px;
+	height: 400px;
 	margin: 0 auto;
     background-color: #34495e;
     color: #fff;

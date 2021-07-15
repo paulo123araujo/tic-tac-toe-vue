@@ -1,18 +1,30 @@
 <template>
   <div id="app">
     <span><strong>Tic Tac Toe</strong></span> <small>in VueJS</small>
-
-    <Board />
+    <Board v-if="players.length > 1" :players="players" />
+    <LoginPlayers v-else @setNewPlayers="setNewPlayers" />
   </div>
 </template>
 
 <script>
-import Board from './components/Board.vue'
+import Board from './components/Board.vue';
+import LoginPlayers from './components/LoginPlayers.vue';
 
 export default {
   name: 'App',
   components: {
-    Board
+    Board,
+    LoginPlayers
+  },
+  data() {
+    return {
+      players: []
+    }
+  },
+  methods: {
+    setNewPlayers(players) {
+      this.players = players
+    }
   }
 }
 </script>
