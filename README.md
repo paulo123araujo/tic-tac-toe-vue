@@ -25,3 +25,5 @@ npm run lint
 - [ ] Add css to almost everything
 - [ ] Refactor with clean code
 - [ ] Decompose in more components
+- [ ] Add TypeScript
+- [ ] Add MVC pattern to the game
