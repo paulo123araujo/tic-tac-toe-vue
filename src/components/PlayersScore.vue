@@ -17,7 +17,7 @@ export default {
         },
         tie: {
             type: Number,
-            required: true
+            default: 0
         }
     }
 }
