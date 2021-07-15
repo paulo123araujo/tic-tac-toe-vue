@@ -1,6 +1,6 @@
 <template>
     <div class="box">
-        <div v-if="errors > 0" class="errors">
+        <div v-if="errors.length > 0" class="errors">
             <div v-for="(error, index) in errors" class="error" :key="index">
                 {{ error }}
             </div>
@@ -34,6 +34,7 @@ export default {
     },
     methods: {
         clickButton() {
+            this.errors = [];
             if (this.isNamesNotEmpty()) {
                 this.$emit('setNewPlayers', this.players)
             }
