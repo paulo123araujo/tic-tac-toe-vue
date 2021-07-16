@@ -22,7 +22,7 @@ npm run lint
 
 ### To do
 - [x] Login players screen
-- [ ] Add css to almost everything
+- [x] Add css to almost everything
 - [ ] Refactor with clean code
 - [ ] Decompose in more components
 - [ ] Add TypeScript
