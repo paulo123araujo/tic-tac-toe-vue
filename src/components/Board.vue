@@ -1,30 +1,32 @@
 <template>
     <div id="board">
-        <span>Vez do jogador: <strong>{{ currentPlayer.name }}</strong></span>
+        <CurrentPlayer :players="playersData"/>
         <div class="game-board">
-            <div 
+            <Square 
                 v-for="(square, index) in game.board"
                 :key="index"
-                class="square"
                 @click="doMove(index)"
-            >
-                <span>{{ square }}</span>
-            </div>
+                :squareValue="square"
+            />
         </div>
     </div>
-    <div class="button">
-        <button type="button" @click="newGame()">Novo Jogo</button>
-    </div>
+    <NewGameButton @newGame="newGame" />
     <PlayersScore :players="players" :tie="tieCount"/>
 </template>
 
 <script>
-import PlayersScore from './PlayersScore.vue'
+import PlayersScore from './PlayersScore.vue';
+import Square from './Square.vue';
+import NewGameButton from './NewGameButton';
+import CurrentPlayer from './CurrentPlayer.vue';
 
 export default {
     name: "Board",
     components: {
-        PlayersScore
+        PlayersScore,
+        Square,
+        NewGameButton,
+        CurrentPlayer
     },
     props: {
         players: {
@@ -44,9 +46,6 @@ export default {
         }
     },
     computed: {
-        currentPlayer() {
-            return this.players.filter(player => player.current)[0]
-        },
         tieCount() {
             let tie = 0;
             if (this.game.number > 1) {
@@ -57,6 +56,9 @@ export default {
         }
     },
     methods: {
+        getCurrentPlayer() {
+            return this.playersData.filter(player => player.current)[0]
+        },
         newGame() {
             for (let i = 0; i < this.game.board.length; ++i) {
                 this.game.board[i] = "";
@@ -76,7 +78,9 @@ export default {
                 return
             }
 
-            this.game.board[index] = this.currentPlayer.value;
+            const currentPlayer = this.getCurrentPlayer();
+
+            this.game.board[index] = currentPlayer.value;
             this.checkWinner();
         },
         checkWinner() {
@@ -140,7 +144,10 @@ export default {
         setWinner() {
             this.game.finished = true;
             ++this.currentPlayer.winsCount;
-            this.game.winner = this.currentPlayer.name;
+
+            const currentPlayer = this.getCurrentPlayer();
+
+            this.game.winner = currentPlayer.name;
             alert(`Jogador ${this.game.winner} venceu!\nJogue novamente!`);
         }
     }
@@ -151,34 +158,6 @@ export default {
 #board {
     width:  100%;
     text-align: center;
-}
-
-#board span {
-    text-align: center;
-    font-size: 32px;
-}
-
-.button {
-    width: 100%;
-    margin: 0 auto;
-}
-
-.button button[type="button"] {
-    border: 1px solid #434343;
-    padding: 15px;
-    background-color: #e3e3e3;
-    color:  #333333;
-    border-radius: 8px;
-    width: 300px;
-    margin: 50px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.button button[type="button"]:hover {
-    background-color: #333333;
-    color: #e3e3e3;
-    transition:  .5s all;
 }
 
 .game-board {
@@ -193,16 +172,5 @@ export default {
 	
 	display: grid;
 	grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-}
-
-.square {
-    border: 6px solid #2c3e50;
-    border-radius: 2px;
-    font-family: Helvetica;
-    font-weight: bold;
-    font-size: 4em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 </style>
