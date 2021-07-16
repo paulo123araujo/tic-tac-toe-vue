@@ -12,7 +12,9 @@
             </div>
         </div>
     </div>
-    <button type="button" @click="newGame()">Novo Jogo</button>
+    <div class="button">
+        <button type="button" @click="newGame()">Novo Jogo</button>
+    </div>
     <PlayersScore :players="players" :tie="tieCount"/>
 </template>
 
@@ -46,9 +48,12 @@ export default {
             return this.players.filter(player => player.current)[0]
         },
         tieCount() {
-            return this.game.number > 1 
-            ? this.game.number - (this.players[0].winsCount + this.players[1].winsCount) 
-            : 0
+            let tie = 0;
+            if (this.game.number > 1) {
+                tie = this.game.number - (this.players[0].winsCount + this.players[1].winsCount)
+                tie = (!this.game.finished) ? tie - 1 : tie;
+            }
+            return tie;
         }
     },
     methods: {
@@ -143,10 +148,44 @@ export default {
 </script>
 
 <style>
+#board {
+    width:  100%;
+    text-align: center;
+}
+
+#board span {
+    text-align: center;
+    font-size: 32px;
+}
+
+.button {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.button button[type="button"] {
+    border: 1px solid #434343;
+    padding: 15px;
+    background-color: #e3e3e3;
+    color:  #333333;
+    border-radius: 8px;
+    width: 300px;
+    margin: 50px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.button button[type="button"]:hover {
+    background-color: #333333;
+    color: #e3e3e3;
+    transition:  .5s all;
+}
+
 .game-board {
     width: 400px;
 	height: 400px;
 	margin: 0 auto;
+    margin-top: 35px;
     background-color: #34495e;
     color: #fff;
     border: 6px solid #2c3e50;
