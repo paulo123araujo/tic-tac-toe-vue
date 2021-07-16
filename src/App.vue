@@ -1,10 +1,6 @@
 <template>
   <div id="app">
-    <div class="header">
-      <div class="title">
-        <strong>Tic Tac Toe</strong> / <small>in VueJS</small>
-      </div>
-    </div>
+    <Title />
     <Board v-if="canPlay()" :players="players" />
     <LoginPlayers v-else @setNewPlayers="setNewPlayers" />
   </div>
@@ -13,12 +9,14 @@
 <script>
 import Board from './components/Board.vue';
 import LoginPlayers from './components/LoginPlayers.vue';
+import Title from './components/Title.vue';
 
 export default {
   name: 'App',
   components: {
     Board,
-    LoginPlayers
+    LoginPlayers,
+    Title
   },
   data() {
     return {
@@ -55,18 +53,5 @@ body, html {
   margin: 0;
   font-family: Roboto, sans-serif;
   background-color: #ffffff;
-}
-
-.header {
-  text-align: center;
-  font-size: 40px;
-  margin-bottom: 30px;
-}
-
-.header .title {
-  padding-top: 50px;
-  background-color: #F26B53;
-  height: 100px;
-  color:  #FFF;
 }
 </style>
